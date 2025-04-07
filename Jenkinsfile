@@ -1,12 +1,12 @@
 pipeline {
   agent {label 'myagent'}
   tools{
-       jdk 'Java21'
+       jdk 'Java17'
        maven 'Maven3'
   }
 
   environment {
-        SONAR_TOKEN = credentials('jenkins-sonarqube-token')  // Reference Jenkins credential
+        //SONAR_TOKEN = credentials('jenkins-sonarqube-token')  // Reference Jenkins credential
         APP_NAME = "petclinic"
             RELEASE = "1.0.0"
             DOCKER_USER = "gani1990"
@@ -26,7 +26,7 @@ stages{
 
  stage("Checkout from SCM"){
       steps{
-      git branch: 'main', credentialsId: 'github', url: 'https://github.com/gani1990/spring-petclinic-main/'
+      git branch: 'main', credentialsId: 'github', url: 'https://github.com/gani1990/spc-working/'
        }
     }
 
@@ -46,7 +46,7 @@ stage("Test Application"){
       steps{
         script{
           withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token'){
-         sh "mvn sonarqube:sonarqube"
+         sh "mvn sonar:sonar"
           }
       }
     }                         
