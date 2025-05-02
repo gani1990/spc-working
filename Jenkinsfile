@@ -60,20 +60,37 @@ stage("Quality Gate"){
     }                         
   } 
 
-stage("Build & Push Docker Image") {
+stage("Build Docker Image") {
             steps {
                 script {
                     docker.withRegistry('',DOCKER_PASS) {
                         docker_image = docker.build "${IMAGE_NAME}"
                     }
 
-                    docker.withRegistry('',DOCKER_PASS) {
+                }
+          }
+}    
+
+stage("Trivy Scan") {
+           steps {
+               script {
+	            sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image gani1990/petclinic-working:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+               }
+           }
+}
+        
+stage("Push Docker Image") {
+            steps {
+                script {
+                     docker.withRegistry('',DOCKER_PASS) {
                         docker_image.push("${IMAGE_TAG}")
                         docker_image.push('latest')
                     }
+                  
                 }
           }
-}        
+}  
+
   
 }
 }
