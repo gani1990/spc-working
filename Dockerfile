@@ -1,9 +1,4 @@
-# FROM maven:3.9-eclipse-temurin-17 AS build
-# COPY . /spc
-# WORKDIR /spc
-# RUN mvn package
-
-FROM eclipse-temurin:17
+FROM gcr.io/distroless/java17-debian12
 LABEL project="learning" 
 LABEL author="khaja"
 ARG USERNAME=spc
