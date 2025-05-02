@@ -35,12 +35,12 @@ stages{
         sh 'mvn clean package'
       }
     }
-// stage("Test Application"){
-//       steps{
+stage("Test Application"){
+      steps{
        
-//         sh 'mvn test'
-//       }
-// }
+        sh 'mvn test'
+      }
+}
 
   stage("SonarQube Analysis"){
       steps{
