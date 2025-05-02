@@ -7,7 +7,7 @@ pipeline {
 
   environment {
         //SONAR_TOKEN = credentials('jenkins-sonarqube-token')  // Reference Jenkins credential
-        APP_NAME = "petclinic"
+        APP_NAME = "petclinic-working"
             RELEASE = "1.0.0"
             DOCKER_USER = "gani1990"
             DOCKER_PASS = 'dockerhub'
