@@ -7,7 +7,7 @@ FROM gcr.io/distroless/java17-debian12
 LABEL project="learning" 
 LABEL author="gani"
 ARG USERNAME=spc
-RUN useradd -m -d /apps -s /bin/bash ${USERNAME}
+#RUN useradd -m -d /apps -s /bin/bash ${USERNAME}
 COPY --from=build --chown=${USERNAME}:${USERNAME}  /spc/target/spring-petclinic-3.4.0-SNAPSHOT.jar /apps/spring-petclinic-3.4.0-SNAPSHOT.jar
 WORKDIR /apps
 EXPOSE 8080
