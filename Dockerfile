@@ -1,8 +1,8 @@
-FROM gcr.io/distroless/java17-debian12
+FROM eclipse-temurin:17
 LABEL project="learning" 
 LABEL author="khaja"
 ARG USERNAME=spc
-RUN useradd -m -d /apps -s /bin/bash ${USERNAME}
+RUN useradd -m -d /apps -s /bin/sh ${USERNAME}
 USER ${USERNAME}
 COPY --chown=${USERNAME}:${USERNAME}  target/spring-petclinic-3.4.0-SNAPSHOT.jar /apps/spring-petclinic-3.4.0-SNAPSHOT.jar
 WORKDIR /apps
