@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17
 LABEL project="learning" 
-LABEL author="khaja"
+LABEL author="gani"
 ARG USERNAME=spc
 RUN useradd -m -d /apps -s /bin/sh ${USERNAME}
 USER ${USERNAME}
