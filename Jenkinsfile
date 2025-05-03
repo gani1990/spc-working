@@ -75,7 +75,7 @@ stage("Trivy Scan") {
            steps {
                script {
 	            //sh ('trivy image gani1990/petclinic-working:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
-                sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock trivy image gani1990/petclinic-working:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+                sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image gani1990/petclinic-working:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
                }
            }
 }
