@@ -94,7 +94,7 @@ stage("Push Docker Image") {
 stage("Trigger CD Pipeline") {
             steps {
                 script {
-                    sh "curl -v -k --user gani:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://192.168.64.128:8085/job/spc-working-CD/buildWithParameters?token=gitops-token'"
+                    sh "curl -v -k --user gani:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'gani:8085/job/spc-working-CD/buildWithParameters?token=gitops-token'"
                 }
             }
        }        
