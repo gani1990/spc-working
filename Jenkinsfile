@@ -13,7 +13,7 @@ pipeline {
             DOCKER_PASS = 'dockerhub'
             IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
             IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"   
-	        //JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+	    JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
     }
 
 stages{
@@ -91,6 +91,13 @@ stage("Push Docker Image") {
                 }
           }
 }  
+stage("Trigger CD Pipeline") {
+            steps {
+                script {
+                    sh "curl -v -k --user gani:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://192.168.64.128:8085/job/spc-working-CD/buildWithParameters?token=gitops-token'"
+                }
+            }
+       }        
 
   
 }
