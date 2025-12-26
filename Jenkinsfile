@@ -56,7 +56,7 @@ stage('SonarQube Analysis') {
   steps {
     withSonarQubeEnv('Sonarqube-server') {
       sh '''
-        cd JtProject && mvn clean verify sonar:sonar
+        mvn clean verify sonar:sonar
       '''
     }
   }
