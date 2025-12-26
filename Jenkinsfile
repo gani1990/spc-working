@@ -42,15 +42,25 @@ stage("Test Application"){
       }
 }
 
-  stage("SonarQube Analysis"){
-      steps{
-        script{
-          withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token'){
-         sh "mvn sonar:sonar"
-          }
-      }
-    }                         
-  }  
+  // stage("SonarQube Analysis"){
+  //     steps{
+  //       script{
+  //         withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token'){
+  //        sh "mvn sonar:sonar"
+  //         }
+  //     }
+  //   }                         
+  // }  
+
+stage('SonarQube Analysis') {
+  steps {
+    withSonarQubeEnv('Sonarqube-server') {
+      sh '''
+        cd JtProject && mvn clean verify sonar:sonar
+      '''
+    }
+  }
+}
 stage("Quality Gate"){
       steps{
         script{
