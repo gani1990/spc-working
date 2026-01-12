@@ -70,6 +70,26 @@ stage("Quality Gate"){
     }                         
   } 
 
+stage('Publish to Nexus') {
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'nexus-creds',
+            usernameVariable: 'NEXUS_USER',
+            passwordVariable: 'NEXUS_PASS'
+        )]) {
+            configFileProvider([configFile(
+                fileId: 'maven-settings',
+                variable: 'MAVEN_SETTINGS'
+            )]) {
+                sh '''
+                mvn clean deploy \
+                -s $MAVEN_SETTINGS \
+                -DskipTests
+                '''
+            }
+        }
+    }
+}
 stage("Build Docker Image") {
             steps {
                 script {
