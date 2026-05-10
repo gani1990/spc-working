@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-        //SONAR_TOKEN = credentials('jenkins-sonarqube-token')  // Reference Jenkins credential
+        SONAR_TOKEN = credentials('sonar-scanner')  // Reference Jenkins credential
         APP_NAME = "petclinic-working"
             RELEASE = "1.0.0"
             DOCKER_USER = "gani1990"
@@ -42,33 +42,38 @@ stage("Test Application"){
       }
 }
 
-  // stage("SonarQube Analysis"){
-  //     steps{
-  //       script{
-  //         withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token'){
-  //        sh "mvn sonar:sonar"
-  //         }
-  //     }
-  //   }                         
-  // }  
-
-stage('SonarQube Analysis') {
-  steps {
-    withSonarQubeEnv('Sonarqube-server') {
-      sh '''
-        mvn clean verify sonar:sonar
-      '''
-    }
-  }
-}
-stage("Quality Gate"){
+  stage("SonarCloud Analysis"){
       steps{
-        script{
-         sleep(10)
-          waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'   
-      }
+       withSonarQubeEnv('sonarcloud') {
+
+                    sh '''
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=gani1990_spring-petclinic \
+                    -Dsonar.organization=gani1990 \
+                    -Dsonar.host.url=https://sonarcloud.io \
+                    -Dsonar.token=$SONAR_TOKEN
+                    '''
     }                         
-  } 
+  }  
+  }
+
+// stage('SonarQube Analysis') {
+//   steps {
+//     withSonarQubeEnv('Sonarqube-server') {
+//       sh '''
+//         mvn clean verify sonar:sonar
+//       '''
+//     }
+//   }
+// }
+// stage("Quality Gate"){
+//       steps{
+//         script{
+//          sleep(10)
+//           waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'   
+//       }
+//     }                         
+//   } 
 
 stage('Publish to Nexus') {
     steps {
