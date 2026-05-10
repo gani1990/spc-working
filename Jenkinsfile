@@ -47,7 +47,7 @@ stage("Test Application"){
        withSonarQubeEnv('sonarcloud') {
 
                     sh '''
-                    mvn sonar:sonar \
+                    mvn clean verify sonar:sonar \
                     -Dsonar.projectKey=gani1990_spring-petclinic \
                     -Dsonar.organization=gani1990 \
                     -Dsonar.host.url=https://sonarcloud.io \
